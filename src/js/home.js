@@ -9,7 +9,7 @@ async function carregarPublicacoesDaAPI() {
     }
 }
 
-// Função para enviar a requisição de curtida para a API
+// Função para enviar curtidas para a API
 async function onClickCurtir(publicacao) {
     try {
         const response = await fetch(`https://localhost:7248/api/Publicacao/CurtirPublicacao?idPublicacao=${publicacao.idPublicacao}`, {
@@ -17,7 +17,6 @@ async function onClickCurtir(publicacao) {
         });
 
         if (response.ok) {
-            // Supondo que a API retorne a contagem atualizada de curtidas
             const updatedCurtidas = await response.json();
 
             // Atualize o elemento de curtidas na interface do usuário
@@ -32,7 +31,7 @@ async function onClickCurtir(publicacao) {
     }
 }
 
-// Função para adicionar os itens da lista de publicações
+// Função para listar as publicações
 async function listarPublicacoes() {
     const listaPublicacoes = document.getElementById("lista-publicacoes");
 

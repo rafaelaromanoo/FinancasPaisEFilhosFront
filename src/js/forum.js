@@ -9,7 +9,6 @@ async function carregarForunsDaAPI() {
     }
 }
 
-
 // Função para adicionar os itens da lista de publicações
 async function ListarForuns() {
     const listaForuns = document.getElementById("lista-foruns");
