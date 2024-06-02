@@ -1,0 +1,51 @@
+.navcolor {
+    background-color: #13527C;
+}
+
+.navbar-custom {
+    background-color: #0B2E46;
+}
+
+.navcolor .nav-link {
+    color: #F4F4F4;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 500px;
+    min-width: 200px;
+}
+
+.search-bar input::placeholder {
+    color: #535353A1;
+}
+
+.btn-forum {
+    background-color: #ffffff !important;
+    border: 1px solid rgb(0, 0, 0) !important;
+    color: #0B2E46 !important;
+    margin-top: 4px;
+}
+
+.btn-forum:hover {
+    background-color: #13527C !important; /* Define a cor de fundo quando o mouse passar por cima */
+    color: #ffffff !important; /* Define a cor do texto quando o mouse passar por cima */
+}
+
+/* Estilizando os ícones das redes sociais */
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Tamanho do círculo */
+    height: 30px; /* Tamanho do círculo */
+    background-color: #13527C; /* Cor de fundo do círculo */
+    border-radius: 50%; /* Torna o fundo circular */
+    color: #ffffff; /* Cor do ícone */
+    margin-right: 8px; /* Espaçamento à direita do ícone */
+    font-size: 16px; /* Tamanho do ícone */
+}
+
+.social-icon i {
+    line-height: 1; /* Centraliza verticalmente o ícone */
+}

@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.h2-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #444444;
+}
+
+main {
+    padding: 50px;
+}
+
+body {
+    background-color: #ECECEC;
+}
+
+.tag-publicacao {
+    font-size: 15px;
+    background-color: #0B2E4647;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 2px; /* Arredondamento dos cantos */
+    display: inline-block; /* Faz com que a div ocupe apenas o espaço necessário */
+    margin-bottom: 10px; /* Reduzir o espaçamento entre a data e a tag */
+}
+
+.curtidas-publicacao {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18.75px;
+    text-align: left;
+    color: #6B6B6B;
+}
+
+.botao-curtir {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 28.13px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    text-align: center;
+    background: #0B2E4621;
+    font: #353535;
+}
+
+.ul-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+}
+
+.data-publicacao{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #6B6B6B;
+    margin-top: -3px;
+    margin-bottom: -0.5rem;
+}
+
+.card-title {
+    font-size: 32px;
+    color: #4A4A4A;
+}
+
+.card-text {
+    font-size: 20px;
+    color: #4A4A4A;
+}
