@@ -8,6 +8,23 @@
             </div>
             <div class="modal-body">
                 <!-- Conteúdo do formulário para adicionar fórum -->
+                <form id="formAdicionarForum">
+                    <div class="mb-3">
+                        <label for="usuarioCadastroForum" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="usuarioCadastroForum">
+                        <div id="usuarioCadastroForumError" class="text-danger" style="display: none;">Por favor, preencha o nome de usuário.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tituloForum" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="tituloForum">
+                        <div id="tituloForumError" class="text-danger" style="display: none;">Por favor, preencha o título.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="conteudoForum" class="form-label">Conteúdo</label>
+                        <textarea class="form-control" id="conteudoForum" rows="3"></textarea>
+                        <div id="conteudoForumError" class="text-danger" style="display: none;">Por favor, preencha o conteúdo.</div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -16,3 +33,4 @@
         </div>
     </div>
 </div>
+<script src="/src/js/modalForum.js"></script>

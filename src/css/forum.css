@@ -80,3 +80,21 @@ body {
     font-size: 20px;
     color: #4A4A4A;
 }
+
+.grupo-h2-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-adicionar-forum {
+    display: inline-block;
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid transparent;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+}

@@ -15,25 +15,27 @@
     <header></header>
     <main class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <button id="adicionar-forum" class="btn btn-primary rounded-circle">+</button>
-                <h2 class="h2-text">Fórum de discussões</h2>
-                
+            <div class="col-md-10">
+                <div class="grupo-h2-button"> 
+                    <h2 class="h2-text">Fórum de discussões</h2>
+                    <button id="adicionar-forum" class="btn-adicionar-forum">Adicionar interação</button>                
+                </div>
                 <!-- Lista de fóruns -->
                 <ul id="lista-foruns" class="list-group ul-text">
-                    <!-- Os itens da lista serão inseridos aqui -->
                 </ul>
-
             </div>
         </div>
     </main>
-    
+
+    <div id="modal-container"></div>
+
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    
-    
+
+
     <script src="/src/js/header.js"></script>
     <script src="/src/js/forum.js"></script>
 </body>
+
 </html>

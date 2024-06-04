@@ -11,9 +11,8 @@ async function carregarForunsDaAPI() {
 
 // Função para adicionar os itens da lista de publicações
 async function ListarForuns() {
-    const listaForuns = document.getElementById("lista-foruns");
-
     try {
+        const listaForuns = document.getElementById("lista-foruns");
         const foruns = await carregarForunsDaAPI();
 
         foruns.sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro));
@@ -36,7 +35,7 @@ async function ListarForuns() {
             botaoCurtir.addEventListener('click', () => {
                 onClickCurtir(forum);
             });
-    
+
             const botaoResponder = itemLista.querySelector('.botao-responder');
             botaoResponder.addEventListener('click', () => {
                 onClickResponder(forum);
@@ -48,6 +47,22 @@ async function ListarForuns() {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
     }
 }
+
+$(function() {
+    $('#adicionar-forum').on('click', function() {
+        console.log("Botão adicionar fórum clicado");
+        $('#modal-container').load('/src/pages/modalForum.html', function(response, status, xhr) {
+            console.log("Status do carregamento do modal:", status);
+            if (status == "success") {
+                console.log("Modal carregado com sucesso");
+                $('#modalAdicionarForum').modal('show');
+            } else {
+                console.error("Erro ao carregar o modal:", xhr.status, xhr.statusText);
+            }
+        });
+    });
+});
+
 
 // Chamando a função para adicionar as publicações quando a página carregar
 document.addEventListener("DOMContentLoaded", ListarForuns);
