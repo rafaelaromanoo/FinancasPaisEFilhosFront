@@ -7,6 +7,10 @@
 - Executei o comando npm install live-server --save-dev
 - E por fim para executar o projeto executei o comando: npm start
 
+Observação: Para quem for baixar o projeto, os arquivos do node já estão presentes. Então só será necessário instalar no node.js no seu computador e em seguida executar o comando no console do Visual Code:
+``` npm install ```
+``` npm start ```
+
 ### Para comparação meu arquivo package.json ficou da seguinte forma:
 ```
 {
@@ -29,4 +33,67 @@
   "description": ""
 }
 
+```
+
+# Para iniciar o banco de dados precisei das seguintes etapas:
+- Tive que instalar o SQL Management Studio.
+- Tive que instalar o SQL Express Edition.
+  - Na instalação do SQL Express, é preciso escolher a opção __"Baixar Mídia"__
+  - Em seguida, escolher a opção LocalDB
+- Para verificar se a instalação foi feita com sucesso, executar o seguinte comando no cmd.
+  ``` sqllocaldb i ```
+  - Se a instalação foi feita com sucesso, o retorno será: "MSSQLLocalDB"
+  - Em seguida, é preciso criar a base de dados com o comando:
+  ``` sqllocaldb create FinancasPeFDb ```
+
+## Testando a criação da instância do banco de dados SQL.
+Ao abrir o SQL Management Studio, usar as opções para se conectar na base criada.
+- Tipo do servidor: Mecanismo de Banco de Dados
+- Nome do servidor: (localdb)\FinancasPeFDb
+- Autenticação: Autenticação do Windows
+
+### Abaixo os scripts para criação das tabelas no banco de dados.
+```
+CREATE TABLE Tag (
+    IdTag int NOT NULL PRIMARY KEY,
+    Descricao varchar(60)
+);
+
+CREATE TABLE Publicacao (
+    IdPublicacao int NOT NULL PRIMARY KEY,
+    UsuarioCadastro varchar(60) NOT NULL,
+    DataCadastro datetime NOT NULL,
+    IdTag int NOT NULL,
+    TituloPublicacao varchar(80) NOT NULL,
+    ConteudoPublicacao varchar(MAX),
+    CurtidasPublicacao int,
+    CONSTRAINT FK_Publicacao_Tag FOREIGN KEY (IdTag) REFERENCES Tag(IdTag)
+);
+
+CREATE TABLE Forum (
+    IdForum int NOT NULL PRIMARY KEY,
+    UsuarioCadastro varchar(60) NOT NULL,
+    DataCadastro datetime NOT NULL,
+    IdTag int NOT NULL,
+    TituloForum varchar(80) NOT NULL,
+    ConteudoForum varchar(MAX),
+    CurtidasForum int,
+    CONSTRAINT FK_Forum_Tag FOREIGN KEY (IdTag) REFERENCES Tag(IdTag)
+);
+
+CREATE TABLE RespostaForum (
+    IdRespostaForum int NOT NULL PRIMARY KEY,
+    IdForum int NOT NULL,
+    UsuarioCadastro varchar(60) NOT NULL,
+    ConteudoResposta varchar(MAX) NOT NULL,
+    CurtidasRespostaForum int,
+    CONSTRAINT FK_RespostaForum_Forum FOREIGN KEY (IdForum) REFERENCES Forum(IdForum)
+);
+
+CREATE TABLE UsuarioNewslatter (
+    idUsuarioNewslatter INT PRIMARY KEY,
+    emailUsuario VARCHAR(60),
+    situacao TINYINT,
+    dataCadastro DATETIME,
+);
 ```
