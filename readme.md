@@ -52,6 +52,13 @@ Ao abrir o SQL Management Studio, usar as opções para se conectar na base cria
 - Nome do servidor: (localdb)\FinancasPeFDb
 - Autenticação: Autenticação do Windows
 
+### Após a conexão funcionar, é preciso criar a base:
+- Clicar com o botão direito na pasta "Banco de Dados"
+- Escolher a opção "Novo Banco de Dados"
+- Escrever "FinancasPeFDb" e clicar no OK
+- Clicar com o botão direito no banco de dados criado na guia "Pesquisador de Objetos"
+- Escolher a opção "Nova consulta"
+
 ### Abaixo os scripts para criação das tabelas no banco de dados.
 ```
 CREATE TABLE Tag (
@@ -96,4 +103,12 @@ CREATE TABLE UsuarioNewslatter (
     situacao TINYINT,
     dataCadastro DATETIME,
 );
+
+INSERT INTO Tag (IdTag,Descricao)
+VALUES (1, 'Descricao teste')
 ```
+
+# Para iniciar o backend
+- É preciso fazer clone do outro projeto que também está no meu repositório no Visual Studio 17.20.
+(FinancasPeFApi)[https://github.com/rafaelaromanoo/FinancasPeFApi]
+- É preciso instalar o pacote .NET 8
