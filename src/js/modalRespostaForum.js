@@ -22,6 +22,7 @@ async function carregarRespostasForum(idForum) {
         console.error('Ocorreu um erro ao carregar as respostas do fórum:', error);
     }
 }
+
 // Função para adicionar comportamento do botão Salvar resposta no modal
 $(function() {
     $(document).off('click', '#btnSalvarResponder').on('click', '#btnSalvarResponder', async function () {
@@ -81,3 +82,8 @@ $(function() {
     });
 });
 
+// Evento acionado quando o modal é fechado
+$('#modalResponderForum').on('hidden.bs.modal', function () {
+    console.log('Modal fechado');
+    location.reload(); // Atualiza a página quando o modal é fechado
+});
