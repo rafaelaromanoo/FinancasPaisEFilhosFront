@@ -86,17 +86,48 @@ $(function () {
 
 // Lógica que abre o modal ao clicar no botão Responder (Para criar nova resposta ao forum)
 $(document).on('click', '.botao-responder', function () {
+    const idForum = $(this).closest('li').attr('id').split('-')[1]; // Obter o idForum do item da lista
+
     console.log("Botão responder fórum clicado");
     $('#modal-container').load('/src/pages/modalRespostaForum.html', function (response, status, xhr) {
         console.log("Status do carregamento do modal:", status);
         if (status == "success") {
             console.log("Modal carregado com sucesso");
             $('#modalResponderForum').modal('show');
+
+            // Carregar as respostas do forum no modal
+            carregarRespostasForum(idForum);
         } else {
             console.error("Erro ao carregar o modal:", xhr.status, xhr.statusText, response);
         }
     });
 });
+
+// Função para buscar as respostas do forum e preencher o modal
+async function carregarRespostasForum(idForum) {
+    try {
+        const response = await fetch(`https://localhost:7248/api/RespostaForum/ListarRespostaForum/${idForum}`);
+        const respostas = await response.json();
+        const listaRespostas = document.getElementById("lista-respostas");
+
+        // Limpar a lista de respostas existente
+        listaRespostas.innerHTML = '';
+
+        // Adicionar as respostas ao modal
+        respostas.forEach(resposta => {
+            const itemLista = document.createElement("li");
+            itemLista.className = "list-group-item";
+            itemLista.innerHTML = `
+                <p class="usuario-resposta"><strong>${resposta.usuarioCadastro}:</strong></p>
+                <p class="conteudo-resposta">${resposta.conteudoResposta}</p>
+            `;
+            listaRespostas.appendChild(itemLista);
+        });
+    } catch (error) {
+        console.error('Ocorreu um erro ao carregar as respostas do fórum:', error);
+    }
+}
+
 
 
 // Chamando a função para adicionar as publicações quando a página carregar
