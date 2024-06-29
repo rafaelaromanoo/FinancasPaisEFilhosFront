@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade" id="modalResponderForum" tabindex="-1" aria-labelledby="modalResponderForumLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalResponderForumLabel">Responder Fórum</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do formulário para responder fórum -->
+                <form id="formResponderForum">
+                    <div class="mb-3">
+                        <label for="usuarioResponderForum" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="usuarioResponderForum">
+                        <div id="usuarioResponderForumError" class="text-danger" style="display: none;">Por favor, preencha o nome de usuário.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="conteudoResponderForum" class="form-label">Conteúdo</label>
+                        <textarea class="form-control" id="conteudoResponderForum" rows="3"></textarea>
+                        <div id="conteudoResponderForumError" class="text-danger" style="display: none;">Por favor, preencha o conteúdo.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button id="btnSalvarResponder" type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

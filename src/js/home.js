@@ -9,34 +9,13 @@ async function carregarPublicacoesDaAPI() {
     }
 }
 
-// Função para enviar curtidas para a API
-async function onClickCurtir(publicacao) {
-    try {
-        const response = await fetch(`https://localhost:7248/api/Publicacao/CurtirPublicacao?idPublicacao=${publicacao.idPublicacao}`, {
-            method: 'POST'
-        });
-
-        if (response.ok) {
-            const updatedCurtidas = await response.json();
-
-            // Atualize o elemento de curtidas na interface do usuário
-            const itemLista = document.querySelector(`#publicacao-${publicacao.idPublicacao}`);
-            const curtidasElement = itemLista.querySelector('.curtidas-publicacao');
-            curtidasElement.textContent = `${updatedCurtidas.curtidasPublicacao} curtidas`;
-        } else {
-            console.error('Falha ao curtir a publicação:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Ocorreu um erro ao enviar a curtida:', error);
-    }
-}
-
 // Função para listar as publicações
 async function listarPublicacoes() {
-    const listaPublicacoes = document.getElementById("lista-publicacoes");
-
     try {
+        const listaPublicacoes = document.getElementById("lista-publicacoes");
         const publicacoes = await carregarPublicacoesDaAPI();
+
+        publicacoes.sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro));
 
         publicacoes.forEach(publicacao => {
             const itemLista = document.createElement("li");
@@ -60,6 +39,28 @@ async function listarPublicacoes() {
         });
     } catch (error) {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
+    }
+}
+
+// Função para enviar curtidas para a API
+async function onClickCurtir(publicacao) {
+    try {
+        const response = await fetch(`https://localhost:7248/api/Publicacao/CurtirPublicacao?idPublicacao=${publicacao.idPublicacao}`, {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            const updatedCurtidas = await response.json();
+
+            // Atualize o elemento de curtidas na interface do usuário
+            const itemLista = document.querySelector(`#publicacao-${publicacao.idPublicacao}`);
+            const curtidasElement = itemLista.querySelector('.curtidas-publicacao');
+            curtidasElement.textContent = `${updatedCurtidas.curtidasPublicacao} curtidas`;
+        } else {
+            console.error('Falha ao curtir a publicação:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Ocorreu um erro ao enviar a curtida:', error);
     }
 }
 
