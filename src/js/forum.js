@@ -23,7 +23,7 @@ async function ListarForuns() {
             itemLista.id = `forum-${forum.idForum}`;
             itemLista.innerHTML = `
                 <p class="data-forum">${forum.dataCadastro}</p>
-                <div class="tag-forum">${forum.idTag}</div>
+                <div class="tag-forum">${forum.descricaoTag}</div>
                 <h5 class="card-title">${forum.tituloForum}</h5>
                 <p class="card-text">${forum.conteudoForum}</p>
                 <div class="curtidas-respostas">
@@ -71,11 +71,10 @@ async function onClickCurtir(forum) {
 // Lógica que abre o modal ao clicar no botão Adicionar interação (Para criar um novo forum)
 $(function () {
     $('#adicionar-forum').on('click', function () {
-        console.log("Botão adicionar fórum clicado");
+
         $('#modal-container').load('/src/pages/modalForum.html', function (response, status, xhr) {
-            console.log("Status do carregamento do modal:", status);
+
             if (status == "success") {
-                console.log("Modal carregado com sucesso");
                 $('#modalAdicionarForum').modal('show');
             } else {
                 console.error("Erro ao carregar o modal:", xhr.status, xhr.statusText, response);
@@ -88,11 +87,9 @@ $(function () {
 $(document).on('click', '.botao-responder', function () {
     const idForum = $(this).closest('li').attr('id').split('-')[1]; // Obter o idForum do item da lista
 
-    console.log("Botão responder fórum clicado");
     $('#modal-container').load('/src/pages/modalRespostaForum.html', function (response, status, xhr) {
-        console.log("Status do carregamento do modal:", status);
+
         if (status == "success") {
-            console.log("Modal carregado com sucesso");
             $('#modalResponderForum').modal('show');
 
             // Armazenar o idForum no modal

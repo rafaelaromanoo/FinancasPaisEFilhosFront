@@ -23,7 +23,7 @@ async function listarPublicacoes() {
             itemLista.id = `publicacao-${publicacao.idPublicacao}`;
             itemLista.innerHTML = `
                 <p class="data-publicacao">${publicacao.dataCadastro}</p>
-                <div class="tag-publicacao">${publicacao.idTag}</div>
+                <div class="tag-publicacao">${publicacao.descricaoTag}</div>
                 <h5 class="card-title">${publicacao.tituloPublicacao}</h5>
                 <p class="card-text">${publicacao.conteudoPublicacao}</p>
                 <div class="curtidas-publicacao">${publicacao.curtidasPublicacao} curtidas</div>
