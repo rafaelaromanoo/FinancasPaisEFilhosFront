@@ -9,30 +9,30 @@ async function carregarForunsDaAPI() {
     }
 }
 
-// Função para adicionar os itens da lista de publicações
+// Função para listar os fóruns
 async function ListarForuns() {
     try {
         const listaForuns = document.getElementById("lista-foruns");
         const foruns = await carregarForunsDaAPI();
 
-        foruns.sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro));
+        foruns.sort((a, b) => parseDateString(b.dataCadastro) - parseDateString(a.dataCadastro));
 
         foruns.forEach(forum => {
             const itemLista = document.createElement("li");
             itemLista.className = "list-group-item";
             itemLista.id = `forum-${forum.idForum}`;
             itemLista.innerHTML = `
-                <p class="data-forum">${forum.dataCadastro}</p>
-                <div class="tag-forum">${forum.descricaoTag}</div>
-                <h5 class="card-title">${forum.tituloForum}</h5>
-                <p class="card-text">${forum.conteudoForum}</p>
-                <div class="curtidas-respostas">
-                    <div class="curtidas-forum">${forum.curtidasForum} curtidas </div>
-                    <div class="respostas-forum">${forum.quantidadeRespostas} respostas</div>
-                </div>
-                <button class="botao-curtir">Curtir</button>
-                <button class="botao-responder">Responder</button>
-            `;
+                    <p class="data-forum">${forum.dataCadastro}</p>
+                    <div class="tag-forum">${forum.descricaoTag}</div>
+                    <h5 class="card-title">${forum.tituloForum}</h5>
+                    <p class="card-text">${forum.conteudoForum}</p>
+                    <div class="curtidas-respostas">
+                        <div class="curtidas-forum">${forum.curtidasForum} curtidas </div>
+                        <div class="respostas-forum">${forum.quantidadeRespostas} respostas</div>
+                    </div>
+                    <button class="botao-curtir">Curtir</button>
+                    <button class="botao-responder">Responder</button>
+                `;
 
             const botaoCurtir = itemLista.querySelector('.botao-curtir');
             botaoCurtir.addEventListener('click', () => {
@@ -103,6 +103,12 @@ $(document).on('click', '.botao-responder', function () {
     });
 });
 
+// Função para corrigir formato da data padrão PT-BR
+function parseDateString(dateString) {
+    const [day, month, yearAndTime] = dateString.split('/');
+    const [year, time] = yearAndTime.split(' ');
+    const [hour, minute, second] = time.split(':');
+    return new Date(year, month - 1, day, hour, minute, second);
+}
 
-// Chamando a função para adicionar as publicações quando a página carregar
-document.addEventListener("DOMContentLoaded", ListarForuns);
+document.addEventListener("DOMContentLoaded", () => ListarForuns());

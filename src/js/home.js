@@ -15,7 +15,15 @@ async function listarPublicacoes() {
         const listaPublicacoes = document.getElementById("lista-publicacoes");
         const publicacoes = await carregarPublicacoesDaAPI();
 
-        publicacoes.sort((a, b) => new Date(b.dataCadastro) - new Date(a.dataCadastro));
+
+        function parseDateString(dateString) {
+            const [day, month, yearAndTime] = dateString.split('/');
+            const [year, time] = yearAndTime.split(' ');
+            const [hour, minute, second] = time.split(':');
+            return new Date(year, month - 1, day, hour, minute, second);
+        }
+
+        publicacoes.sort((a, b) => parseDateString(b.dataCadastro) - parseDateString(a.dataCadastro));
 
         publicacoes.forEach(publicacao => {
             const itemLista = document.createElement("li");

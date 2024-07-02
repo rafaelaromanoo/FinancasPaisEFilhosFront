@@ -1,3 +1,47 @@
+$(function () {
+    console.log("Modal carregado e pronto");
+
+    // Popula o dropdown de tags ao abrir o modal
+    $('#modalAdicionarForum').on('shown.bs.modal', function () {
+        populateTagDropdown();
+    });
+
+    // Função para salvar fórum
+    $('#btnSalvarForum').on('click', async function () {
+        const usuarioCadastroForum = $('#usuarioCadastroForum').val();
+        const tituloForum = $('#tituloForum').val();
+        const conteudoForum = $('#conteudoForum').val();
+        const idTag = $('#descricaoTagForum').val(); // Captura o valor da tag selecionada
+
+        // Remove classes de erro existentes
+        $('.form-control').removeClass('is-invalid');
+
+        if (usuarioCadastroForum && tituloForum && conteudoForum && idTag) {
+            const success = await AdicionarForum(usuarioCadastroForum, tituloForum, conteudoForum, idTag);
+            if (success) {
+                $('#modalAdicionarForum').modal('hide'); // Fecha o modal após salvar
+                location.reload(); // Recarrega a página
+            } else {
+                alert("Erro ao tentar adicionar um novo fórum.");
+            }
+        } else {
+            // Adiciona classes de erro aos campos vazios
+            if (!usuarioCadastroForum) {
+                $('#usuarioCadastroForum').addClass('is-invalid');
+            }
+            if (!tituloForum) {
+                $('#tituloForum').addClass('is-invalid');
+            }
+            if (!conteudoForum) {
+                $('#conteudoForum').addClass('is-invalid');
+            }
+            if (!idTag) {
+                $('#descricaoTagForum').addClass('is-invalid');
+            }
+        }
+    });
+});
+
 async function fetchTags() {
     try {
         const response = await fetch('https://localhost:7248/api/Tag/ListarTags');
@@ -22,65 +66,22 @@ async function populateTagDropdown() {
     dropdown.empty();
     dropdown.append('<option value="" selected disabled>Selecione uma tag</option>');
     if (tags.length > 0) {
-        tags.forEach(tag => {
-            dropdown.append(`<option value="${tag}">${tag}</option>`);
+        tags.forEach((tag, index) => {
+            $("option").remove(":contains('Todos')");
+            dropdown.append(`<option value="${index + 1}">${tag}</option>`);
         });
     } else {
-        console.warn('Nenhuma tag encontrada'); // Log se nenhuma tag for encontrada
+        console.warn('Nenhuma tag encontrada');
     }
 }
 
-$(function() {
-    console.log("Modal carregado e pronto");
-
-    // Popula o dropdown de tags ao abrir o modal
-    $('#modalAdicionarForum').on('shown.bs.modal', function() {
-        populateTagDropdown();
-    });
-
-    // Função para salvar fórum
-    $('#btnSalvarForum').on('click', async function() {
-        const usuarioCadastroForum = $('#usuarioCadastroForum').val();
-        const tituloForum = $('#tituloForum').val();
-        const conteudoForum = $('#conteudoForum').val();
-        const descricaoTagForum = $('#descricaoTagForum').val();
-
-        // Remove classes de erro existentes
-        $('.form-control').removeClass('is-invalid');
-
-        if (usuarioCadastroForum && tituloForum && conteudoForum && descricaoTagForum) {
-            const success = await AdicionarForum(usuarioCadastroForum, tituloForum, conteudoForum, descricaoTagForum);
-            if (success) {
-                $('#modalAdicionarForum').modal('hide'); // Fecha o modal após salvar
-                location.reload(); // Recarrega a página
-            } else {
-                alert("Erro ao tentar adicionar um novo fórum.");
-            }
-        } else {
-            // Adiciona classes de erro aos campos vazios
-            if (!usuarioCadastroForum) {
-                $('#usuarioCadastroForum').addClass('is-invalid');
-            }
-            if (!tituloForum) {
-                $('#tituloForum').addClass('is-invalid');
-            }
-            if (!conteudoForum) {
-                $('#conteudoForum').addClass('is-invalid');
-            }
-            if (!descricaoTagForum) {
-                $('#descricaoTagForum').addClass('is-invalid');
-            }
-        }
-    });
-});
-
-async function AdicionarForum(usuarioCadastroForum, tituloForum, conteudoForum, descricaoTagForum) {
+async function AdicionarForum(usuarioCadastroForum, tituloForum, conteudoForum, idTag) {
     try {
         const requestBody = {
             usuarioCadastroForum,
             tituloForum,
             conteudoForum,
-            descricaoTagForum
+            idTag: parseInt(idTag) // Converte o valor para um número
         };
 
         const response = await fetch('https://localhost:7248/api/Forum/AdicionarForum', {
