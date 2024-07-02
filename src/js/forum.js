@@ -10,18 +10,22 @@ async function carregarForunsDaAPI() {
 }
 
 // Função para listar os fóruns
-async function ListarForuns() {
+async function ListarForuns(descricaoTag = null) {
     try {
         const listaForuns = document.getElementById("lista-foruns");
         const foruns = await carregarForunsDaAPI();
 
+        // Limpar lista atual
+        listaForuns.innerHTML = '';
+
         foruns.sort((a, b) => parseDateString(b.dataCadastro) - parseDateString(a.dataCadastro));
 
         foruns.forEach(forum => {
-            const itemLista = document.createElement("li");
-            itemLista.className = "list-group-item";
-            itemLista.id = `forum-${forum.idForum}`;
-            itemLista.innerHTML = `
+            if (forum.descricaoTag === descricaoTag || descricaoTag === 'Todos' || descricaoTag === null) {
+                const itemLista = document.createElement("li");
+                itemLista.className = "list-group-item";
+                itemLista.id = `forum-${forum.idForum}`;
+                itemLista.innerHTML = `
                     <p class="data-forum">${forum.dataCadastro}</p>
                     <div class="tag-forum">${forum.descricaoTag}</div>
                     <h5 class="card-title">${forum.tituloForum}</h5>
@@ -34,12 +38,13 @@ async function ListarForuns() {
                     <button class="botao-responder">Responder</button>
                 `;
 
-            const botaoCurtir = itemLista.querySelector('.botao-curtir');
-            botaoCurtir.addEventListener('click', () => {
-                onClickCurtir(forum);
-            });
+                const botaoCurtir = itemLista.querySelector('.botao-curtir');
+                botaoCurtir.addEventListener('click', () => {
+                    onClickCurtir(forum);
+                });
 
-            listaForuns.appendChild(itemLista);
+                listaForuns.appendChild(itemLista);
+            }
         });
     } catch (error) {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
@@ -111,4 +116,14 @@ function parseDateString(dateString) {
     return new Date(year, month - 1, day, hour, minute, second);
 }
 
-document.addEventListener("DOMContentLoaded", () => ListarForuns());
+// Carrega a tela e reenvia para funcao caso tenha click no filtro de tag
+document.addEventListener("DOMContentLoaded", () => {
+    ListarForuns();
+    const tags = document.querySelectorAll('.nav-link');
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const descricaoTag = tag.dataset.tag; // Captura a descrição da tag
+            ListarForuns(descricaoTag);
+        });
+    });
+});
