@@ -10,26 +10,22 @@ async function carregarPublicacoesDaAPI() {
 }
 
 // Função para listar as publicações
-async function listarPublicacoes() {
+async function ListarPublicacoes(descricaoTag = null) {
     try {
         const listaPublicacoes = document.getElementById("lista-publicacoes");
         const publicacoes = await carregarPublicacoesDaAPI();
 
-
-        function parseDateString(dateString) {
-            const [day, month, yearAndTime] = dateString.split('/');
-            const [year, time] = yearAndTime.split(' ');
-            const [hour, minute, second] = time.split(':');
-            return new Date(year, month - 1, day, hour, minute, second);
-        }
+        // Limpar lista atual
+        listaPublicacoes.innerHTML = '';
 
         publicacoes.sort((a, b) => parseDateString(b.dataCadastro) - parseDateString(a.dataCadastro));
 
         publicacoes.forEach(publicacao => {
-            const itemLista = document.createElement("li");
-            itemLista.className = "list-group-item";
-            itemLista.id = `publicacao-${publicacao.idPublicacao}`;
-            itemLista.innerHTML = `
+            if (publicacao.descricaoTag === descricaoTag || descricaoTag === 'Todos' || descricaoTag === null ) {
+                const itemLista = document.createElement("li");
+                itemLista.className = "list-group-item";
+                itemLista.id = `publicacao-${publicacao.idPublicacao}`;
+                itemLista.innerHTML = `
                 <p class="data-publicacao">${publicacao.dataCadastro}</p>
                 <div class="tag-publicacao">${publicacao.descricaoTag}</div>
                 <h5 class="card-title">${publicacao.tituloPublicacao}</h5>
@@ -38,12 +34,13 @@ async function listarPublicacoes() {
                 <button class="botao-curtir">Curtir</button>
             `;
 
-            const botaoCurtir = itemLista.querySelector('.botao-curtir');
-            botaoCurtir.addEventListener('click', () => {
-                onClickCurtir(publicacao);
-            });
+                const botaoCurtir = itemLista.querySelector('.botao-curtir');
+                botaoCurtir.addEventListener('click', () => {
+                    onClickCurtir(publicacao);
+                });
 
-            listaPublicacoes.appendChild(itemLista);
+                listaPublicacoes.appendChild(itemLista);
+            }
         });
     } catch (error) {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
@@ -60,7 +57,7 @@ async function onClickCurtir(publicacao) {
         if (response.ok) {
             const updatedCurtidas = await response.json();
 
-            // Atualize o elemento de curtidas na interface do usuário
+            // Atualiza o elemento de curtidas na interface do usuário
             const itemLista = document.querySelector(`#publicacao-${publicacao.idPublicacao}`);
             const curtidasElement = itemLista.querySelector('.curtidas-publicacao');
             curtidasElement.textContent = `${updatedCurtidas.curtidasPublicacao} curtidas`;
@@ -72,5 +69,22 @@ async function onClickCurtir(publicacao) {
     }
 }
 
-// Chamando a função para adicionar as publicações quando a página carregar
-document.addEventListener("DOMContentLoaded", listarPublicacoes);
+// Função para corrigir formato da data padrão PT-BR
+function parseDateString(dateString) {
+    const [day, month, yearAndTime] = dateString.split('/');
+    const [year, time] = yearAndTime.split(' ');
+    const [hour, minute, second] = time.split(':');
+    return new Date(year, month - 1, day, hour, minute, second);
+}
+
+// Carrega a tela e reenvia para funcao caso tenha click no filtro de tag
+document.addEventListener("DOMContentLoaded", () => {
+    ListarPublicacoes();
+    const tags = document.querySelectorAll('.nav-link');
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const descricaoTag = tag.dataset.tag; // Captura a descrição da tag
+            ListarPublicacoes(descricaoTag);
+        });
+    });
+});
