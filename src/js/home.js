@@ -42,6 +42,10 @@ async function ListarPublicacoes(descricaoTag = null) {
                 listaPublicacoes.appendChild(itemLista);
             }
         });
+
+        if (listaPublicacoes.innerHTML === '') {
+            listaPublicacoes.innerHTML = `<p class="sem-resultados-filtro">Sem publicações para o filtro selecionado. Por favor, selecione outro filtro.</p>`
+        }
     } catch (error) {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
     }

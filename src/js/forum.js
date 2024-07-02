@@ -46,6 +46,10 @@ async function ListarForuns(descricaoTag = null) {
                 listaForuns.appendChild(itemLista);
             }
         });
+
+        if (listaForuns.innerHTML === '') {
+            listaForuns.innerHTML = `<p class="sem-resultados-filtro">Sem foruns para o filtro selecionado. Por favor, selecione outro filtro.</p>`
+        }
     } catch (error) {
         console.error('Ocorreu um erro ao adicionar as publicações:', error);
     }
